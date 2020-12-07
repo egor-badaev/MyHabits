@@ -13,6 +13,7 @@
 		746EDDA5257E9FE600764AA0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 746EDDA3257E9FE600764AA0 /* Main.storyboard */; };
 		746EDDA7257E9FEC00764AA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 746EDDA6257E9FEC00764AA0 /* Assets.xcassets */; };
 		746EDDAA257E9FEC00764AA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 746EDDA8257E9FEC00764AA0 /* LaunchScreen.storyboard */; };
+		746EDDB4257EA0C900764AA0 /* HabitsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EDDB3257EA0C900764AA0 /* HabitsStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		746EDDA6257E9FEC00764AA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		746EDDA9257E9FEC00764AA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		746EDDAB257E9FEC00764AA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		746EDDB3257EA0C900764AA0 /* HabitsStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HabitsStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 		746EDD9C257E9FE600764AA0 /* MyHabits */ = {
 			isa = PBXGroup;
 			children = (
+				746EDDB2257EA0C900764AA0 /* Data */,
 				746EDD9D257E9FE600764AA0 /* AppDelegate.swift */,
 				746EDD9F257E9FE600764AA0 /* SceneDelegate.swift */,
 				746EDDA1257E9FE600764AA0 /* ViewController.swift */,
@@ -65,6 +68,14 @@
 				746EDDAB257E9FEC00764AA0 /* Info.plist */,
 			);
 			path = MyHabits;
+			sourceTree = "<group>";
+		};
+		746EDDB2257EA0C900764AA0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				746EDDB3257EA0C900764AA0 /* HabitsStore.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -137,6 +148,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				746EDDB4257EA0C900764AA0 /* HabitsStore.swift in Sources */,
 				746EDDA2257E9FE600764AA0 /* ViewController.swift in Sources */,
 				746EDD9E257E9FE600764AA0 /* AppDelegate.swift in Sources */,
 				746EDDA0257E9FE600764AA0 /* SceneDelegate.swift in Sources */,
