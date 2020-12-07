@@ -34,5 +34,21 @@ enum StyleHelper {
         static let large: CGFloat = 22
         static let normal: CGFloat = 16
     }
+    
+    enum Spacing {
+        static let small: CGFloat = 7
+        static let normal: CGFloat = 15
+    }
+    
+    enum Size {
+        static let habitColorIndicator: CGFloat = 30
+    }
+    
+    enum ActionType {
+        case create
+        case edit
+    }
+    
+
 }
 

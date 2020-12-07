@@ -17,6 +17,8 @@
 		746EDDBB257EA5D700764AA0 /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EDDBA257EA5D700764AA0 /* InfoViewController.swift */; };
 		746EDDC0257EABAE00764AA0 /* UIView+MyHabits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EDDBF257EABAE00764AA0 /* UIView+MyHabits.swift */; };
 		746EDDC7257EADD800764AA0 /* StyleHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EDDC6257EADD800764AA0 /* StyleHelper.swift */; };
+		746EDDD0257EB9EE00764AA0 /* HabitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EDDCF257EB9EE00764AA0 /* HabitViewController.swift */; };
+		746EDDD4257EBAAB00764AA0 /* UILabel+MyHabits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EDDD3257EBAAB00764AA0 /* UILabel+MyHabits.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		746EDDBA257EA5D700764AA0 /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		746EDDBF257EABAE00764AA0 /* UIView+MyHabits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+MyHabits.swift"; sourceTree = "<group>"; };
 		746EDDC6257EADD800764AA0 /* StyleHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleHelper.swift; sourceTree = "<group>"; };
+		746EDDCF257EB9EE00764AA0 /* HabitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitViewController.swift; sourceTree = "<group>"; };
+		746EDDD3257EBAAB00764AA0 /* UILabel+MyHabits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+MyHabits.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +68,7 @@
 		746EDD9C257E9FE600764AA0 /* MyHabits */ = {
 			isa = PBXGroup;
 			children = (
-				746EDDB7257EA5C900764AA0 /* HabitsViewController.swift */,
+				746EDDD2257EB9F700764AA0 /* Habits */,
 				746EDDBA257EA5D700764AA0 /* InfoViewController.swift */,
 				746EDDBE257EAB9600764AA0 /* Helpers */,
 				746EDDB2257EA0C900764AA0 /* Data */,
@@ -91,8 +95,18 @@
 			children = (
 				746EDDBF257EABAE00764AA0 /* UIView+MyHabits.swift */,
 				746EDDC6257EADD800764AA0 /* StyleHelper.swift */,
+				746EDDD3257EBAAB00764AA0 /* UILabel+MyHabits.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		746EDDD2257EB9F700764AA0 /* Habits */ = {
+			isa = PBXGroup;
+			children = (
+				746EDDB7257EA5C900764AA0 /* HabitsViewController.swift */,
+				746EDDCF257EB9EE00764AA0 /* HabitViewController.swift */,
+			);
+			path = Habits;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -168,8 +182,10 @@
 				746EDDB4257EA0C900764AA0 /* HabitsStore.swift in Sources */,
 				746EDDC0257EABAE00764AA0 /* UIView+MyHabits.swift in Sources */,
 				746EDD9E257E9FE600764AA0 /* AppDelegate.swift in Sources */,
+				746EDDD0257EB9EE00764AA0 /* HabitViewController.swift in Sources */,
 				746EDDA0257E9FE600764AA0 /* SceneDelegate.swift in Sources */,
 				746EDDB8257EA5C900764AA0 /* HabitsViewController.swift in Sources */,
+				746EDDD4257EBAAB00764AA0 /* UILabel+MyHabits.swift in Sources */,
 				746EDDBB257EA5D700764AA0 /* InfoViewController.swift in Sources */,
 				746EDDC7257EADD800764AA0 /* StyleHelper.swift in Sources */,
 			);
