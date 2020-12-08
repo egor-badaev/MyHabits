@@ -49,6 +49,9 @@ enum StyleHelper {
         case edit
     }
     
+    enum Defaults {
+        static let habitColor = StyleHelper.Color.orange
+    }
 
 }
 

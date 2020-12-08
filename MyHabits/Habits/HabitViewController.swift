@@ -57,14 +57,19 @@ class HabitViewController: UIViewController {
         return colorLabel
     }()
     
-    private let colorIndicator: UIView = {
+    private lazy var colorIndicator: UIView = {
         let colorIndicator = UIView()
         
         colorIndicator.toAutoLayout()
-        colorIndicator.backgroundColor = StyleHelper.Color.orange
+        colorIndicator.backgroundColor = StyleHelper.Defaults.habitColor
 
         colorIndicator.clipsToBounds = true
         colorIndicator.layer.cornerRadius = StyleHelper.Size.habitColorIndicator / 2
+        
+        colorIndicator.isUserInteractionEnabled = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapColor(_:)))
+        colorIndicator.addGestureRecognizer(tapGestureRecognizer)
         
         return colorIndicator
     }()
@@ -110,6 +115,19 @@ class HabitViewController: UIViewController {
         setTime(from: timePicker)
         
         return timePicker
+    }()
+    
+    private lazy var colorPickerVc: UIColorPickerViewController = {
+        let colorPickerVc = UIColorPickerViewController()
+        
+        colorPickerVc.delegate = self
+        colorPickerVc.supportsAlpha = false
+        
+        if let defaultColor = StyleHelper.Defaults.habitColor {
+            colorPickerVc.selectedColor = defaultColor
+        }
+
+        return colorPickerVc
     }()
     
     // MARK: - Life cycle
@@ -244,5 +262,15 @@ class HabitViewController: UIViewController {
     
     @objc private func close(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func tapColor(_ sender: Any) {
+        navigationController?.present(colorPickerVc, animated: true, completion: nil)
+    }
+}
+
+extension HabitViewController: UIColorPickerViewControllerDelegate {
+    func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
+        colorIndicator.backgroundColor = viewController.selectedColor
     }
 }
