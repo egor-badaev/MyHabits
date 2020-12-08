@@ -9,9 +9,29 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
-    // MARK: - Properties
+    // MARK: - Public properties
     
-    var actionType: StyleHelper.ActionType?
+    var actionType: StyleHelper.ActionType? = .create
+    var habitTitle: String?
+    var habitColor: UIColor? {
+        didSet {
+            guard let habitColor = habitColor else { return }
+            colorIndicator.backgroundColor = habitColor
+        }
+    }
+    var habitTime: Date? {
+        didSet {
+            
+            guard let habitTime = habitTime else { return }
+            
+            let formatter = DateFormatter()
+            
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+
+            timeIndicatorLabel.text = formatter.string(from: habitTime)
+        }
+    }
     
     // MARK: - Subviews
 
@@ -39,12 +59,12 @@ class HabitViewController: UIViewController {
         return titleLabel
     }()
     
-    private let titleTextField: UITextField = {
+    private lazy var titleTextField: UITextField = {
         let titleTextField = UITextField()
         
         titleTextField.toAutoLayout()
-        
         titleTextField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        titleTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         
         return titleTextField
     }()
@@ -61,7 +81,6 @@ class HabitViewController: UIViewController {
         let colorIndicator = UIView()
         
         colorIndicator.toAutoLayout()
-        colorIndicator.backgroundColor = StyleHelper.Defaults.habitColor
 
         colorIndicator.clipsToBounds = true
         colorIndicator.layer.cornerRadius = StyleHelper.Size.habitColorIndicator / 2
@@ -123,10 +142,6 @@ class HabitViewController: UIViewController {
         colorPickerVc.delegate = self
         colorPickerVc.supportsAlpha = false
         
-        if let defaultColor = StyleHelper.Defaults.habitColor {
-            colorPickerVc.selectedColor = defaultColor
-        }
-
         return colorPickerVc
     }()
     
@@ -171,10 +186,6 @@ class HabitViewController: UIViewController {
     // MARK: - Private methods
     
     private func setupUI() {
-        
-        if actionType == nil {
-            actionType = .create
-        }
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(close(_:)))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit(_:)))
@@ -236,6 +247,11 @@ class HabitViewController: UIViewController {
         ]
         
         NSLayoutConstraint.activate(constraints)
+        
+        if let habitColor = StyleHelper.Defaults.habitColor {
+            self.habitColor = habitColor
+            colorPickerVc.selectedColor = habitColor
+        }
     }
     
     // MARK: - Actions
@@ -245,17 +261,29 @@ class HabitViewController: UIViewController {
     }
     
     private func setTime(from datePicker: UIDatePicker) {
-        let formatter = DateFormatter()
-        
-        formatter.dateStyle = .none
-        formatter.timeStyle = .short
-        
-        timeIndicatorLabel.text = formatter.string(from: datePicker.date)
+        habitTime = datePicker.date
     }
     
     @objc private func saveHabit(_ sender: Any) {
         
-        //TODO: Add habit saving
+        guard let habitTitle = habitTitle,
+              !habitTitle.isEmpty,
+              let habitTime = habitTime,
+              let habitColor = habitColor else {
+            
+            let alertVC = UIAlertController(title: "Невозможно сохранить привычку!", message: "Для сохранения проивычки все поля должны быть заполнены", preferredStyle: .alert)
+            let alertOkAction = UIAlertAction(title: "Понятно", style: .default, handler: nil)
+            alertVC.addAction(alertOkAction)
+            navigationController?.present(alertVC, animated: true, completion: nil)
+            
+            return
+        }
+
+        let newHabit = Habit(name: habitTitle,
+                             date: habitTime,
+                             color: habitColor)
+        let store = HabitsStore.shared
+        store.habits.append(newHabit)
         
         self.close(sender)
     }
@@ -267,10 +295,15 @@ class HabitViewController: UIViewController {
     @objc private func tapColor(_ sender: Any) {
         navigationController?.present(colorPickerVc, animated: true, completion: nil)
     }
+    
+    @objc private func textFieldEditingChanged(_ sender: Any) {
+        guard let textField = sender as? UITextField else { return }
+        habitTitle = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
 
 extension HabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-        colorIndicator.backgroundColor = viewController.selectedColor
+        habitColor = viewController.selectedColor
     }
 }
