@@ -20,12 +20,12 @@ enum StyleHelper {
     }
     
     enum Color {
-        static let accent = UIColor(named: "AccentColor")
-        static let blue = UIColor(named: "HabitsBlueColor")
-        static let green = UIColor(named: "HabitsGreenColor")
-        static let indigo = UIColor(named: "HabitsIndigoColor")
-        static let orange = UIColor(named: "HabitsOrangeColor")
-        static let lightGray = UIColor(named: "LightGrayColor")
+        static let accent = UIColor(named: "AccentColor") ?? UIColor.systemPurple
+        static let blue = UIColor(named: "HabitsBlueColor") ?? UIColor.systemBlue
+        static let green = UIColor(named: "HabitsGreenColor") ?? UIColor.systemGreen
+        static let indigo = UIColor(named: "HabitsIndigoColor") ?? UIColor.systemIndigo
+        static let orange = UIColor(named: "HabitsOrangeColor") ?? UIColor.systemOrange
+        static let lightGray = UIColor(named: "LightGrayColor") ?? UIColor.systemGray6
         static let gray = UIColor.systemGray2
         static let darkGray = UIColor.systemGray
     }

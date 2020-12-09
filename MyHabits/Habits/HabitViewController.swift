@@ -13,9 +13,8 @@ class HabitViewController: UIViewController {
     
     var actionType: StyleHelper.ActionType? = .create
     var habitTitle: String?
-    var habitColor: UIColor? {
+    var habitColor: UIColor = StyleHelper.Defaults.habitColor {
         didSet {
-            guard let habitColor = habitColor else { return }
             colorIndicator.backgroundColor = habitColor
         }
     }
@@ -248,10 +247,8 @@ class HabitViewController: UIViewController {
         
         NSLayoutConstraint.activate(constraints)
         
-        if let habitColor = StyleHelper.Defaults.habitColor {
-            self.habitColor = habitColor
-            colorPickerVc.selectedColor = habitColor
-        }
+        colorPickerVc.selectedColor = habitColor
+        colorIndicator.backgroundColor = habitColor
     }
     
     // MARK: - Actions
@@ -268,8 +265,7 @@ class HabitViewController: UIViewController {
         
         guard let habitTitle = habitTitle,
               !habitTitle.isEmpty,
-              let habitTime = habitTime,
-              let habitColor = habitColor else {
+              let habitTime = habitTime else {
             
             let alertVC = UIAlertController(title: "Невозможно сохранить привычку!", message: "Для сохранения проивычки все поля должны быть заполнены", preferredStyle: .alert)
             let alertOkAction = UIAlertAction(title: "Понятно", style: .default, handler: nil)
