@@ -9,16 +9,16 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
-    // MARK: - Public properties
+    // MARK: - Properties
     
-    var actionType: StyleHelper.ActionType? = .create
-    var habitTitle: String?
-    var habitColor: UIColor = StyleHelper.Defaults.habitColor {
+    private var actionType: StyleHelper.ActionType = .create
+    private var habitTitle: String?
+    private var habitColor: UIColor = StyleHelper.Defaults.habitColor {
         didSet {
             colorIndicator.backgroundColor = habitColor
         }
     }
-    var habitTime: Date? {
+    private var habitTime: Date? {
         didSet {
             
             guard let habitTime = habitTime else { return }
@@ -181,6 +181,23 @@ class HabitViewController: UIViewController {
         scrollView.verticalScrollIndicatorInsets = .zero
     }
 
+    // MARK: - Public methods
+    
+    /**
+     Switch vc to edit mode and load habit to edit
+     
+     - parameters:
+        - habit: a `Habit` object to be edited
+     
+     Do not call this function for habit creation
+     */
+    
+    func configure(with habit: Habit) {
+        actionType = .edit
+        habitTitle = habit.name
+        habitTime = habit.date
+        habitColor = habit.color
+    }
     
     // MARK: - Private methods
     
@@ -194,8 +211,6 @@ class HabitViewController: UIViewController {
             title = "Создать"
         case .edit:
             title = "Править"
-        default:
-            title = ""
         }
         
         view.backgroundColor = .white

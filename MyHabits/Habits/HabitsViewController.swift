@@ -26,7 +26,6 @@ class HabitsViewController: UIViewController {
     @objc private func addHabit(_ sender: Any) {
         
         let vc = HabitViewController()
-        vc.actionType = .create
         let navigationVC = UINavigationController(rootViewController: vc)
 
         navigationController?.present(navigationVC, animated: true, completion: nil)
