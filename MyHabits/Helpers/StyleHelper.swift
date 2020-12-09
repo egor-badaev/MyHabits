@@ -33,15 +33,23 @@ enum StyleHelper {
     enum Margin {
         static let large: CGFloat = 22
         static let normal: CGFloat = 16
+        static let small: CGFloat = 6
     }
     
     enum Spacing {
         static let small: CGFloat = 7
-        static let normal: CGFloat = 15
+        static let normal: CGFloat = 12
+        static let large: CGFloat = 15
+    }
+    
+    enum Radius {
+        static let small: CGFloat = 4
+        static let large: CGFloat = 8
     }
     
     enum Size {
         static let habitColorIndicator: CGFloat = 30
+        static let minimumColumnWidth: CGFloat = 320
     }
     
     enum ActionType {

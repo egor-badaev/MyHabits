@@ -234,7 +234,7 @@ class HabitViewController: UIViewController {
             titleTextField.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             titleTextField.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
-            colorLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: StyleHelper.Spacing.normal),
+            colorLabel.topAnchor.constraint(equalTo: titleTextField.bottomAnchor, constant: StyleHelper.Spacing.large),
             colorLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             colorLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
@@ -243,7 +243,7 @@ class HabitViewController: UIViewController {
             colorIndicator.widthAnchor.constraint(equalToConstant: StyleHelper.Size.habitColorIndicator),
             colorIndicator.heightAnchor.constraint(equalToConstant: StyleHelper.Size.habitColorIndicator),
             
-            timeLabel.topAnchor.constraint(equalTo: colorIndicator.bottomAnchor, constant: StyleHelper.Spacing.normal),
+            timeLabel.topAnchor.constraint(equalTo: colorIndicator.bottomAnchor, constant: StyleHelper.Spacing.large),
             timeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             timeLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
@@ -254,7 +254,7 @@ class HabitViewController: UIViewController {
             timeIndicatorLabel.leadingAnchor.constraint(equalTo: timeIndicatorPrefix.trailingAnchor),
             timeIndicatorLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             
-            timePicker.topAnchor.constraint(equalTo: timeIndicatorPrefix.bottomAnchor, constant: StyleHelper.Spacing.normal),
+            timePicker.topAnchor.constraint(equalTo: timeIndicatorPrefix.bottomAnchor, constant: StyleHelper.Spacing.large),
             timePicker.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             timePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             timePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
