@@ -62,11 +62,9 @@ class ProgressCollectionViewCell: UICollectionViewCell {
     // MARK: - Public methods
     func configure(with progress: Float) {
         
-        setupMotivationLabel(for: progress)
-        
+        motivationLabel.text = motivationalText(for: progress)
         progressBar.progress = progress
-        
-        progressLabel.text = "\(Int(progress * 100))%"
+        progressLabel.text = progressLabelText(for: progress)
     }
     
     func resetProgress(with progress: Float) {
@@ -74,29 +72,27 @@ class ProgressCollectionViewCell: UICollectionViewCell {
         let oldProgress = progressBar.progress
 
         if oldProgress == 0 || progress == 1 {
-            UIView.animate(withDuration: 0.2) {
-                self.motivationLabel.alpha = 0
-            } completion: { _ in
-                self.setupMotivationLabel(for: progress)
-                UIView.animate(withDuration: 0.2) {
-                    self.motivationLabel.alpha = 1
-                }
-            }
+            motivationLabel.setText(motivationalText(for: progress), animated: true)
         }
         
+        progressLabel.setText(progressLabelText(for: progress), animated: true)
         progressBar.setProgress(progress, animated: true)
     }
     
     // MARK: - Private methods
     
-    private func setupMotivationLabel(for progress: Float) {
+    private func motivationalText(for progress: Float) -> String {
         if progress == 0 {
-            motivationLabel.text = StyleHelper.MotivationalSpeeches.start
+            return StyleHelper.MotivationalSpeeches.start
         } else if progress < 1 {
-            motivationLabel.text = StyleHelper.MotivationalSpeeches.inProgress
+            return StyleHelper.MotivationalSpeeches.inProgress
         } else {
-            motivationLabel.text = StyleHelper.MotivationalSpeeches.finished
+            return StyleHelper.MotivationalSpeeches.finished
         }
+    }
+    
+    private func progressLabelText(for progress: Float) -> String {
+        return "\(Int(progress * 100))%"
     }
     
     private func setupUI() {

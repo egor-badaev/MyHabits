@@ -24,7 +24,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
             habitTitleLabel.text = habit.name
             habitTimeLabel.text = habit.dateString
 
-            recalculateStreak()
+            guard let streakText = streakText() else { return }
+            habitRepeatLabel.text = streakText
         }
     }
     
@@ -136,9 +137,11 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Private methods
 
-    private func recalculateStreak() {
-        guard let habit = habit else { return }
-        habitRepeatLabel.text = "Подряд: \(habit.trackDates.count)"
+    private func streakText() -> String? {
+        guard let habit = habit else { return nil }
+        return "Подряд: \(habit.trackDates.count)"
+    }
+    
     }
 
     private func setupUI() {
@@ -188,16 +191,10 @@ class HabitCollectionViewCell: UICollectionViewCell {
         
         guard let habit = habit else { return }
         HabitsStore.shared.track(habit)
-        
-        UIView.animate(withDuration: 0.2) {
-            self.habitRepeatLabel.alpha = 0
-        } completion: { _ in
-            self.recalculateStreak()
-            UIView.animate(withDuration: 0.2) {
-                self.habitRepeatLabel.alpha = 1
-            }
-        }
-        
+
+        guard let streakText = streakText() else { return }
+        habitRepeatLabel.setText(streakText, animated: true)
+
         trackCompletion?()
     }
 }
