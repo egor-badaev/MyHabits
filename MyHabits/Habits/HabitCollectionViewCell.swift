@@ -28,20 +28,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private var isTracked: Bool = false {
-        didSet {
-            if isTracked {
-                habitTrackTick.backgroundColor = habitColor?.withAlphaComponent(0)
-                UIView.animate(withDuration: 0.2) {
-                    self.habitTrackTick.backgroundColor = self.habitColor?.withAlphaComponent(1)
-                    self.habitTrackTick.layer.borderWidth = .zero
-                }
-            } else {
-                habitTrackTick.backgroundColor = .white
-                habitTrackTick.layer.borderWidth = StyleHelper.Size.habitTrackTickBorder
-            }
-        }
-    }
+    private var isTracked: Bool = false
+
     private var habitColor: UIColor? {
         didSet {
             guard let habitColor = habitColor else { return }
@@ -101,6 +89,15 @@ class HabitCollectionViewCell: UICollectionViewCell {
         let tickImageView = UIImageView()
         tickImageView.image = #imageLiteral(resourceName: "tick_icon")
         tickImageView.backgroundColor = .clear
+        
+        if isTracked {
+            habitTrackTick.backgroundColor = habitColor
+            habitTrackTick.layer.borderWidth = .zero
+        } else {
+            habitTrackTick.backgroundColor = .white
+            habitTrackTick.layer.borderWidth = StyleHelper.Size.habitTrackTickBorder
+        }
+        
         tickImageView.toAutoLayout()
         
         habitTrackTick.addSubview(tickImageView)
@@ -180,7 +177,14 @@ class HabitCollectionViewCell: UICollectionViewCell {
         
         guard !isTracked else { return }
         
-        isTracked = true        
+        isTracked = true
+        
+        habitTrackTick.backgroundColor = habitColor?.withAlphaComponent(0)
+        UIView.animate(withDuration: 0.2) {
+            self.habitTrackTick.backgroundColor = self.habitColor?.withAlphaComponent(1)
+            self.habitTrackTick.layer.borderWidth = .zero
+        }
+
         
         guard let habit = habit else { return }
         HabitsStore.shared.track(habit)
