@@ -263,7 +263,6 @@ class HabitViewController: UIViewController {
         
         NSLayoutConstraint.activate(constraints)
         
-        colorPickerVc.selectedColor = habitColor
         colorIndicator.backgroundColor = habitColor
     }
     
@@ -305,6 +304,7 @@ class HabitViewController: UIViewController {
     }
     
     @objc private func tapColor(_ sender: Any) {
+        colorPickerVc.selectedColor = habitColor
         navigationController?.present(colorPickerVc, animated: true, completion: nil)
     }
     
