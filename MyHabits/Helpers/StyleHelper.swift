@@ -34,6 +34,12 @@ enum StyleHelper {
         static let large: CGFloat = 22
         static let normal: CGFloat = 16
         static let small: CGFloat = 6
+        
+        enum Inner {
+            static let small: CGFloat = 10
+            static let normal: CGFloat = 12
+            static let large: CGFloat = 15
+        }
     }
     
     enum Spacing {
@@ -50,6 +56,15 @@ enum StyleHelper {
     enum Size {
         static let habitColorIndicator: CGFloat = 30
         static let minimumColumnWidth: CGFloat = 320
+        static let progressCellHeight: CGFloat = 60
+        static let progressBarHeight: CGFloat = 7
+        static let habitCellHeight: CGFloat = 130
+    }
+    
+    enum MotivationalSpeeches {
+        static let start = "Самое время начать!"
+        static let inProgress = "Всё получится!"
+        static let finished = "Молодец!"
     }
     
     enum ActionType {

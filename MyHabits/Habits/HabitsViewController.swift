@@ -107,9 +107,9 @@ extension HabitsViewController: UICollectionViewDataSource {
         
         switch indexPath.section {
         case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.reuseIdentifier, for: indexPath)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProgressCollectionViewCell.reuseIdentifier, for: indexPath) as? ProgressCollectionViewCell else { return UICollectionViewCell() }
             
-            // TODO: configure progress cell
+            cell.configure(with: HabitsStore.shared.todayProgress)
             
             return cell
         case 1:
@@ -159,11 +159,11 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         switch indexPath.section {
         
         case 0:
-            height = 60
+            height = StyleHelper.Size.progressCellHeight
             width = totalWidth - horizontalInsets
             
         default:
-            height = 130
+            height = StyleHelper.Size.habitCellHeight
             
             let numberOfColumns = Int(totalWidth / StyleHelper.Size.minimumColumnWidth)
             guard numberOfColumns > 0 else { return .zero }
