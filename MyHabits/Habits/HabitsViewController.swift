@@ -28,6 +28,8 @@ class HabitsViewController: UIViewController {
         return collectionView
     }()
     
+    private var progressCell: ProgressCollectionViewCell?
+    
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -111,11 +113,18 @@ extension HabitsViewController: UICollectionViewDataSource {
             
             cell.configure(with: HabitsStore.shared.todayProgress)
             
+            progressCell = cell
+            
             return cell
         case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.reuseIdentifier, for: indexPath)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HabitCollectionViewCell.reuseIdentifier, for: indexPath) as? HabitCollectionViewCell,
+                  HabitsStore.shared.habits.indices.contains(indexPath.item) else { return UICollectionViewCell() }
             
-            // TODO: configure habit cell
+            let habit = HabitsStore.shared.habits[indexPath.item]
+            cell.configure(with: habit)
+            cell.trackCompletion = { [weak self] in
+                self?.progressCell?.resetProgress(with: HabitsStore.shared.todayProgress)
+            }
             
             return cell
         default:

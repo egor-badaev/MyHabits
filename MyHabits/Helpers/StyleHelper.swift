@@ -40,9 +40,16 @@ enum StyleHelper {
             static let normal: CGFloat = 12
             static let large: CGFloat = 15
         }
+        
+        enum Habit {
+            static let normal: CGFloat = 20
+            static let large: CGFloat = 26
+            static let giant: CGFloat = 40
+        }
     }
     
     enum Spacing {
+        static let smallest: CGFloat = 4
         static let small: CGFloat = 7
         static let normal: CGFloat = 12
         static let large: CGFloat = 15
@@ -59,6 +66,8 @@ enum StyleHelper {
         static let progressCellHeight: CGFloat = 60
         static let progressBarHeight: CGFloat = 7
         static let habitCellHeight: CGFloat = 130
+        static let habitTrackTickSize: CGFloat = 36
+        static let habitTrackTickBorder: CGFloat = 2
     }
     
     enum MotivationalSpeeches {
