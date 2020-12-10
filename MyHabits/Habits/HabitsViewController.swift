@@ -80,6 +80,9 @@ class HabitsViewController: UIViewController {
     @objc private func addHabit(_ sender: Any) {
         
         let vc = HabitViewController()
+        vc.completion = { [weak self] in
+            self?.collectionView.reloadData()
+        }
         let navigationVC = UINavigationController(rootViewController: vc)
 
         navigationController?.present(navigationVC, animated: true, completion: nil)

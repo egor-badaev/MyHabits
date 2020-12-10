@@ -11,6 +11,7 @@ class HabitViewController: UIViewController {
     
     // MARK: - Properties
     
+    var completion: (() -> Void)?
     private var actionType: StyleHelper.ActionType = .create
     private var habitTitle: String?
     private var habitColor: UIColor = StyleHelper.Defaults.habitColor {
@@ -300,7 +301,7 @@ class HabitViewController: UIViewController {
     }
     
     @objc private func close(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: completion)
     }
     
     @objc private func tapColor(_ sender: Any) {
