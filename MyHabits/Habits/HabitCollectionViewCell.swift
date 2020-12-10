@@ -21,6 +21,8 @@ class HabitCollectionViewCell: UICollectionViewCell {
             habitColor = habit.color
             isTracked = habit.isAlreadyTakenToday
             
+            setupTick()
+            
             habitTitleLabel.text = habit.name
             habitTimeLabel.text = habit.dateString
 
@@ -91,14 +93,6 @@ class HabitCollectionViewCell: UICollectionViewCell {
         tickImageView.image = #imageLiteral(resourceName: "tick_icon")
         tickImageView.backgroundColor = .clear
         
-        if isTracked {
-            habitTrackTick.backgroundColor = habitColor
-            habitTrackTick.layer.borderWidth = .zero
-        } else {
-            habitTrackTick.backgroundColor = .white
-            habitTrackTick.layer.borderWidth = StyleHelper.Size.habitTrackTickBorder
-        }
-        
         tickImageView.toAutoLayout()
         
         habitTrackTick.addSubview(tickImageView)
@@ -142,6 +136,15 @@ class HabitCollectionViewCell: UICollectionViewCell {
         return "Подряд: \(habit.trackDates.count)"
     }
     
+    private func setupTick() {
+        if isTracked {
+            habitTrackTick.backgroundColor = habitColor
+            habitTrackTick.layer.borderWidth = .zero
+        } else {
+            habitTrackTick.backgroundColor = .white
+            habitTrackTick.layer.borderWidth = StyleHelper.Size.habitTrackTickBorder
+        }
+
     }
 
     private func setupUI() {
