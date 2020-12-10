@@ -42,6 +42,8 @@ class HabitsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         NotificationCenter.default.addObserver(self, selector: #selector(deviceDidChangeOrientation), name: UIDevice.orientationDidChangeNotification, object: nil)
     }
     
@@ -60,7 +62,6 @@ class HabitsViewController: UIViewController {
     
     private func setupUI() {
         title = "Сегодня"
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addHabit(_:)))
         
         view.addSubview(collectionView)
@@ -184,5 +185,13 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         }
         
         return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard HabitsStore.shared.habits.indices.contains(indexPath.item) else { return }
+        let vc = HabitDetailViewController()
+        let habit = HabitsStore.shared.habits[indexPath.item]
+        vc.configure(with: habit)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

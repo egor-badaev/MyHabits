@@ -81,6 +81,10 @@ enum StyleHelper {
         case edit
     }
     
+    enum ReuseIdentifier {
+        static let habitDetail = "HabitDetailTableViewCell"
+    }
+    
     enum Defaults {
         static let habitColor = StyleHelper.Color.orange
     }

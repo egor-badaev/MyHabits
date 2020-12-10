@@ -21,6 +21,7 @@
 		746EDDD4257EBAAB00764AA0 /* UILabel+MyHabits.swift in Sources */ = {isa = PBXBuildFile; fileRef = 746EDDD3257EBAAB00764AA0 /* UILabel+MyHabits.swift */; };
 		74B0B58C2581409F00E7C328 /* ProgressCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B0B58B2581409F00E7C328 /* ProgressCollectionViewCell.swift */; };
 		74B0B58F258140AF00E7C328 /* HabitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B0B58E258140AF00E7C328 /* HabitCollectionViewCell.swift */; };
+		74B0B5922582B51800E7C328 /* HabitDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74B0B5912582B51800E7C328 /* HabitDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		746EDDD3257EBAAB00764AA0 /* UILabel+MyHabits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+MyHabits.swift"; sourceTree = "<group>"; };
 		74B0B58B2581409F00E7C328 /* ProgressCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressCollectionViewCell.swift; sourceTree = "<group>"; };
 		74B0B58E258140AF00E7C328 /* HabitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCollectionViewCell.swift; sourceTree = "<group>"; };
+		74B0B5912582B51800E7C328 /* HabitDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				746EDDB7257EA5C900764AA0 /* HabitsViewController.swift */,
+				74B0B5912582B51800E7C328 /* HabitDetailViewController.swift */,
 				74B0B58B2581409F00E7C328 /* ProgressCollectionViewCell.swift */,
 				74B0B58E258140AF00E7C328 /* HabitCollectionViewCell.swift */,
 				746EDDCF257EB9EE00764AA0 /* HabitViewController.swift */,
@@ -185,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74B0B5922582B51800E7C328 /* HabitDetailViewController.swift in Sources */,
 				746EDDB4257EA0C900764AA0 /* HabitsStore.swift in Sources */,
 				746EDDC0257EABAE00764AA0 /* UIView+MyHabits.swift in Sources */,
 				746EDD9E257E9FE600764AA0 /* AppDelegate.swift in Sources */,
