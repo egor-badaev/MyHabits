@@ -66,6 +66,7 @@ class HabitViewController: UIViewController {
         
         titleTextField.toAutoLayout()
         titleTextField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        titleTextField.textColor = habitColor
         titleTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         titleTextField.addTarget(self, action: #selector(textFieldEditindDidBegin(_:)), for: .editingDidBegin)
         titleTextField.addTarget(self, action: #selector(textFieldEditingDidEnd(_:)), for: .editingDidEnd)
