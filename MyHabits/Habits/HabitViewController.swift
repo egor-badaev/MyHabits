@@ -149,6 +149,44 @@ class HabitViewController: UIViewController {
         return colorPickerVc
     }()
     
+    private lazy var deleteButton: UIButton = {
+        let deleteButton = UIButton(type: .system)
+        
+        deleteButton.toAutoLayout()
+        deleteButton.setTitle("Удалить", for: .normal)
+        deleteButton.setTitleColor(.red, for: .normal)
+        
+        deleteButton.addTarget(self, action: #selector(deleteHabit(_:)), for: .touchUpInside)
+        
+        return deleteButton
+    }()
+    
+    private lazy var deleteButtonPrimaryBottomConstraint: NSLayoutConstraint = {
+        let constraint = NSLayoutConstraint(
+            item: self.deleteButton,
+            attribute: .bottom,
+            relatedBy: .equal,
+            toItem: self.view.safeAreaLayoutGuide,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: -StyleHelper.Margin.normal / 2
+        )
+        return constraint
+    }()
+    
+    private lazy var deleteButtonSecondaryBottomConstraint: NSLayoutConstraint = {
+        let constraint = NSLayoutConstraint(
+            item: self.deleteButton,
+            attribute: .bottom,
+            relatedBy: .equal,
+            toItem: self.view,
+            attribute: .bottom,
+            multiplier: 1,
+            constant: -StyleHelper.Margin.normal / 2
+        )
+        return constraint
+    }()
+
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -177,14 +215,30 @@ class HabitViewController: UIViewController {
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
-            scrollView.contentInset.bottom = keyboardSize.height
-            scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            switch actionType {
+            case .create:
+                scrollView.contentInset.bottom = keyboardSize.height
+                scrollView.verticalScrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+            case .edit:
+                deleteButtonPrimaryBottomConstraint.isActive = false
+                deleteButtonSecondaryBottomConstraint.isActive = true
+                self.deleteButtonSecondaryBottomConstraint.constant = -keyboardSize.height
+                UIView.animate(withDuration: 0.3) {
+                    self.view.layoutSubviews()
+                }
+            }
         }
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
-        scrollView.contentInset.bottom = .zero
-        scrollView.verticalScrollIndicatorInsets = .zero
+        switch actionType {
+        case .create:
+            scrollView.contentInset.bottom = .zero //insetAdjustment
+            scrollView.verticalScrollIndicatorInsets = .zero //UIEdgeInsets(top: 0, left: 0, bottom: insetAdjustment, right: 0)
+        case .edit:
+            deleteButtonSecondaryBottomConstraint.isActive = false
+            deleteButtonPrimaryBottomConstraint.isActive = true
+        }
     }
     
     // MARK: - Text Fiels life cycle
@@ -239,8 +293,9 @@ class HabitViewController: UIViewController {
         }
         
         view.backgroundColor = .white
-        view.setupScrollSubview(scrollView, withContentView: contentView)
-
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(titleTextField)
         contentView.addSubview(colorLabel)
@@ -250,7 +305,17 @@ class HabitViewController: UIViewController {
         contentView.addSubview(timeIndicatorLabel)
         contentView.addSubview(timePicker)
         
-        let constraints = [
+        var constraints = [
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: StyleHelper.Margin.large),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: StyleHelper.Margin.normal),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: StyleHelper.Margin.normal),
@@ -284,6 +349,21 @@ class HabitViewController: UIViewController {
             timePicker.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             timePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ]
+        
+
+        switch actionType {
+        
+        case .create:
+            constraints.append(scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor))
+            
+        case .edit:
+            view.addSubview(deleteButton)
+            constraints.append(contentsOf: [
+                deleteButton.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
+                deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                deleteButtonPrimaryBottomConstraint
+            ])
+        }
         
         NSLayoutConstraint.activate(constraints)
         
@@ -336,6 +416,26 @@ class HabitViewController: UIViewController {
         }
         
         self.close(sender)
+    }
+    
+    @objc private func deleteHabit(_ sender: Any) {
+        let alertVC = UIAlertController(title: "Вы уверены?", message: "Это действие нельзя отменить!", preferredStyle: .alert)
+        let alertDeleteAction = UIAlertAction(title: "Удалить", style: .destructive) { action in
+            guard let habit = self.habit,
+                  let index = HabitsStore.shared.habits.firstIndex(of: habit) else {
+                print("Возникла ошибка при редактировании привычки")
+                return
+            }
+            
+            HabitsStore.shared.habits.remove(at: index)
+            
+            self.close(sender)
+        
+        }
+        let alertCancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        alertVC.addAction(alertDeleteAction)
+        alertVC.addAction(alertCancelAction)
+        navigationController?.present(alertVC, animated: true, completion: nil)
     }
     
     @objc private func close(_ sender: Any) {

@@ -79,6 +79,10 @@ class HabitDetailViewController: UIViewController {
             if let editCompletion = self.editCompletion {
                 editCompletion()
             }
+
+            if !HabitsStore.shared.habits.contains(habit) {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
         let navigationVC = UINavigationController(rootViewController: habitVc)
 
