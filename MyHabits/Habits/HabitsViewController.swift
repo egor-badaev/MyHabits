@@ -82,7 +82,8 @@ class HabitsViewController: UIViewController {
         
         let vc = HabitViewController()
         vc.completion = { [weak self] in
-            self?.collectionView.reloadData()
+            self?.collectionView.insertItems(at: [IndexPath(item: HabitsStore.shared.habits.count - 1, section: 1)])
+            self?.progressCell?.resetProgress(with: HabitsStore.shared.todayProgress)
         }
         let navigationVC = UINavigationController(rootViewController: vc)
 
@@ -191,7 +192,8 @@ extension HabitsViewController: UICollectionViewDelegateFlowLayout {
         guard HabitsStore.shared.habits.indices.contains(indexPath.item) else { return }
         let vc = HabitDetailViewController()
         vc.editCompletion = { [weak self] in
-            self?.collectionView.reloadData()
+            self?.collectionView.reloadSections(IndexSet(integer: 1))
+            self?.progressCell?.resetProgress(with: HabitsStore.shared.todayProgress)
         }
         let habit = HabitsStore.shared.habits[indexPath.item]
         vc.configure(with: habit)
