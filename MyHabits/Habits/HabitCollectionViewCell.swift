@@ -53,6 +53,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         habitTitleLabel.toAutoLayout()
         
         habitTitleLabel.font = StyleHelper.Font.headline
+        habitTitleLabel.numberOfLines = 2
         
         return habitTitleLabel
     }()
