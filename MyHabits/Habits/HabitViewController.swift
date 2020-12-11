@@ -153,7 +153,7 @@ class HabitViewController: UIViewController {
         let deleteButton = UIButton(type: .system)
         
         deleteButton.toAutoLayout()
-        deleteButton.setTitle("Удалить", for: .normal)
+        deleteButton.setTitle("Удалить привычку", for: .normal)
         deleteButton.setTitleColor(.red, for: .normal)
         
         deleteButton.addTarget(self, action: #selector(deleteHabit(_:)), for: .touchUpInside)
@@ -419,10 +419,10 @@ class HabitViewController: UIViewController {
     }
     
     @objc private func deleteHabit(_ sender: Any) {
-        let alertVC = UIAlertController(title: "Вы уверены?", message: "Это действие нельзя отменить!", preferredStyle: .alert)
+        guard let habit = habit else { return }
+        let alertVC = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку \"\(habit.name)\"?", preferredStyle: .alert)
         let alertDeleteAction = UIAlertAction(title: "Удалить", style: .destructive) { action in
-            guard let habit = self.habit,
-                  let index = HabitsStore.shared.habits.firstIndex(of: habit) else {
+            guard let index = HabitsStore.shared.habits.firstIndex(of: habit) else {
                 print("Возникла ошибка при редактировании привычки")
                 return
             }
@@ -433,8 +433,8 @@ class HabitViewController: UIViewController {
         
         }
         let alertCancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-        alertVC.addAction(alertDeleteAction)
         alertVC.addAction(alertCancelAction)
+        alertVC.addAction(alertDeleteAction)
         navigationController?.present(alertVC, animated: true, completion: nil)
     }
     
