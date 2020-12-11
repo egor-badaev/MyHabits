@@ -10,6 +10,7 @@ import UIKit
 class HabitDetailViewController: UIViewController {
     
     private var habit: Habit?
+    var editCompletion: (() -> Void)?
     
     // MARK: - Subviews
     
@@ -67,7 +68,21 @@ class HabitDetailViewController: UIViewController {
     // MARK: - Actions
     
     @objc private func editHabit(_ sender: Any) {
-        print("Tap edit")
+        guard let habit = habit else { return }
+        let habitVc = HabitViewController()
+        habitVc.configure(with: habit)
+        habitVc.completion = { [weak self] in
+            
+            guard let self = self else { return }
+            
+            self.title = habit.name
+            if let editCompletion = self.editCompletion {
+                editCompletion()
+            }
+        }
+        let navigationVC = UINavigationController(rootViewController: habitVc)
+
+        navigationController?.present(navigationVC, animated: true, completion: nil)
     }
 }
 

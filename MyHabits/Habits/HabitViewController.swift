@@ -12,11 +12,13 @@ class HabitViewController: UIViewController {
     // MARK: - Properties
     
     var completion: (() -> Void)?
+    private var habit: Habit?
     private var actionType: StyleHelper.ActionType = .create
     private var habitTitle: String?
     private var habitColor: UIColor = StyleHelper.Defaults.habitColor {
         didSet {
             colorIndicator.backgroundColor = habitColor
+            titleTextField.textColor = habitColor
         }
     }
     private var habitTime: Date? {
@@ -65,6 +67,8 @@ class HabitViewController: UIViewController {
         titleTextField.toAutoLayout()
         titleTextField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
         titleTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        titleTextField.addTarget(self, action: #selector(textFieldEditindDidBegin(_:)), for: .editingDidBegin)
+        titleTextField.addTarget(self, action: #selector(textFieldEditingDidEnd(_:)), for: .editingDidEnd)
         
         return titleTextField
     }()
@@ -169,6 +173,7 @@ class HabitViewController: UIViewController {
 
     
     // MARK: - Keyboard life cycle
+    
     @objc private func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             
@@ -180,6 +185,21 @@ class HabitViewController: UIViewController {
     @objc private func keyboardWillHide(notification: NSNotification) {
         scrollView.contentInset.bottom = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
+    }
+    
+    // MARK: - Text Fiels life cycle
+    
+    @objc private func textFieldEditindDidBegin(_ sender: Any) {
+        titleTextField.font = StyleHelper.Font.body
+    }
+    
+    @objc private func textFieldEditingDidEnd(_ sender: Any) {
+        if let habitTitle = habitTitle,
+           habitTitle.count > 0 {
+            titleTextField.font = StyleHelper.Font.headline
+        } else {
+            titleTextField.font = StyleHelper.Font.body
+        }
     }
 
     // MARK: - Public methods
@@ -195,9 +215,13 @@ class HabitViewController: UIViewController {
     
     func configure(with habit: Habit) {
         actionType = .edit
+        self.habit = habit
         habitTitle = habit.name
         habitTime = habit.date
         habitColor = habit.color
+        
+        titleTextField.text = habit.name
+        titleTextField.font = StyleHelper.Font.headline
     }
     
     // MARK: - Private methods
@@ -289,12 +313,27 @@ class HabitViewController: UIViewController {
             
             return
         }
-
         let newHabit = Habit(name: habitTitle,
                              date: habitTime,
                              color: habitColor)
-        let store = HabitsStore.shared
-        store.habits.append(newHabit)
+
+        switch actionType {
+        case .create:
+            let store = HabitsStore.shared
+            store.habits.append(newHabit)
+        case .edit:
+            guard let oldHabit = habit else {
+                print("Возникла ошибка при редактировании привычки")
+                return
+            }
+            
+            if(oldHabit != newHabit) {
+                oldHabit.name = habitTitle
+                oldHabit.date = habitTime
+                oldHabit.color = habitColor
+                HabitsStore.shared.save()
+            }
+        }
         
         self.close(sender)
     }
